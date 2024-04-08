@@ -10,7 +10,7 @@
     <name>Acme SpringBoot Starter aggregator</name>
 
     <modules>
-        <module>starters/base-acme-spring-boot-starter</module>
+        <module>starters/acme-spring-boot-starter-base</module>
         <module>sample</module>
     </modules>
 </project>

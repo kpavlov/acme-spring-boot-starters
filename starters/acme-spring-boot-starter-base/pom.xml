@@ -11,7 +11,7 @@
     </parent>
 
     <groupId>com.acme.springboot</groupId>
-    <artifactId>base-acme-spring-boot-starter</artifactId>
+    <artifactId>acme-spring-boot-starter-base</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
     <name>Base SpringBoot Starter for Acme Inc. microservices</name>
