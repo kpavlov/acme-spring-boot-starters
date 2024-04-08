@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+    <springProperty scope="context" name="service" source="spring.application.name"/>
+
+    <springProfile name="!text-logging">
+        <!-- https://github.com/logfellow/logstash-logback-encoder -->
+        <appender name="console-sync" class="ch.qos.logback.core.ConsoleAppender">
+            <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+                <level>${CONSOLE_LOG_THRESHOLD}</level>
+            </filter>
+            <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+                <includeMdc>true</includeMdc>
+                <timeZone>UTC</timeZone>
+                <fieldNames>
+                    <levelValue>[ignore]</levelValue>
+                    <logger>logger</logger>
+                    <stackTrace>exception</stackTrace>
+                    <thread>thread</thread>
+                    <timestamp>timestamp</timestamp>
+                    <version>version</version>
+                </fieldNames>
+                <throwableConverter class="net.logstash.logback.stacktrace.ShortenedThrowableConverter">
+                    <maxDepthPerThrowable>30</maxDepthPerThrowable>
+                    <maxLength>2048</maxLength>
+                    <shortenedClassNameLength>30</shortenedClassNameLength>
+                    <exclude>sun\.reflect\..*\.invoke.*</exclude>
+                    <exclude>net\.sf\.cglib\.proxy\.MethodProxy\.invoke</exclude>
+                    <rootCauseFirst>true</rootCauseFirst>
+                    <inlineHash>true</inlineHash>
+                    <lineSeparator>\\n</lineSeparator>
+                </throwableConverter>
+            </encoder>
+        </appender>
+        <appender name="CONSOLE" class="net.logstash.logback.appender.LoggingEventAsyncDisruptorAppender">
+            <appender-ref ref="console-sync"/>
+        </appender>
+    </springProfile>
+    <springProfile name="text-logging">
+        <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
+    </springProfile>
+    <!-- Appender to log to console -->
+
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+    </root>
+</configuration>

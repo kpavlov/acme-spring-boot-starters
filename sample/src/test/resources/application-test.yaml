@@ -1,0 +1,3 @@
+spring:
+  profiles:
+    active: default # Set to "text-logging" to use text logging instead of JSON
